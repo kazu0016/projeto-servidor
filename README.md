@@ -65,13 +65,13 @@ Provisionamento da Infraestrutura (Terraform)
 Navegue até a pasta que contém seus arquivos .tf e execute:
 Bash
 
-# Inicializa o backend e baixa provedores
+Inicializa o backend e baixa provedores
 terraform init
 
-# Visualiza o plano de execução (cerca de 20 a 30 recursos)
+Visualiza o plano de execução (cerca de 20 a 30 recursos)
 terraform plan
 
-# Aplica as mudanças e cria a VPC, ECR, ALB, e Cluster ECS
+Aplica as mudanças e cria a VPC, ECR, ALB, e Cluster ECS
 terraform apply
 
 Build e Push da Imagem (CI - GitHub Actions)
@@ -90,4 +90,3 @@ Entrega Contínua (CD - AWS CodePipeline)
 A nova imagem no ECR disparará o pipeline ECS-Nginx-CD-Pipeline. O CodeDeploy executará o deploy Blue/Green no ECS. O DNS do ALB (saída do Terraform) fornecerá o URL final da aplicação.
 ![Diagrama do Pipeline CI/CD com CodeDeploy](docs/deploy-ecs.drawio.png)
 ---------------------------------
-This is a challenge by Coodesh
