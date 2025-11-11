@@ -1,4 +1,4 @@
-Projeto de Entrega Contínua (CD) no AWS Fargate
+🌐 Projeto de Entrega Contínua (CD) no AWS Fargate
 
 📝 Descrição do Projeto
 
@@ -19,7 +19,7 @@ Segurança	AWS IAM & OIDC	Autenticação passwordless e segura (OpenID Connect) 
 
 O pipeline de CD foi desenhado para garantir rapidez, segurança e alta disponibilidade:
 
-1. Diagrama de Fluxo do Pipeline
+Diagrama de Fluxo do Pipeline
 
 O pipeline utiliza uma abordagem de três estágios (Source, Build e Deploy), com o GitHub Actions atuando como a ferramenta de Build/Push e o CodePipeline gerenciando a entrega final.
 Estágio	Ferramenta	Objetivo e Processo de Seleção
@@ -27,7 +27,7 @@ Source/Build	GitHub Actions	Objetivo: Construir a imagem Docker e enviá-la para
 Source/Trigger	AWS ECR	Objetivo: Iniciar o pipeline. Seleção: É o repositório de imagens nativo e central na AWS. O CodePipeline é configurado para monitorar a tag :latest (ou a tag de commit) e disparar o fluxo.
 Deploy	AWS CodeDeploy (ECS)	Objetivo: Atualizar o Serviço ECS com a nova imagem sem inatividade. Seleção: É a ferramenta nativa da AWS para gerenciar implantações Blue/Green em ECS, fornecendo rollback automático e gerenciamento seguro da troca de tráfego via ALB.
 
-2. Configurações de Rede e Segurança (Terraform)
+Configurações de Rede e Segurança (Terraform)
 
     VPC: Definida com Subnets Públicas (para o ALB) e Privadas (para as tarefas Fargate).
 
@@ -37,7 +37,7 @@ Deploy	AWS CodeDeploy (ECS)	Objetivo: Atualizar o Serviço ECS com a nova imagem
 
 🛠️ Como Instalar e Usar o Projeto
 
-1. Pré-requisitos
+Pré-requisitos
 
     AWS CLI configurada.
 
@@ -45,7 +45,7 @@ Deploy	AWS CodeDeploy (ECS)	Objetivo: Atualizar o Serviço ECS com a nova imagem
 
     Acesso ao seu repositório GitHub.
 
-2. Configuração de Segurança (OIDC)
+Configuração de Segurança (OIDC)
 
 A autenticação é feita via OIDC.
 
@@ -60,7 +60,7 @@ A autenticação é feita via OIDC.
 
     Anexe a política de permissão ECR (AmazonEC2ContainerRegistryPowerUser) ao Role.
 
-3. Provisionamento da Infraestrutura (Terraform)
+Provisionamento da Infraestrutura (Terraform)
 
 Navegue até a pasta que contém seus arquivos .tf e execute:
 Bash
@@ -74,27 +74,19 @@ terraform plan
 # Aplica as mudanças e cria a VPC, ECR, ALB, e Cluster ECS
 terraform apply
 
-4. Build e Push da Imagem (CI - GitHub Actions)
+Build e Push da Imagem (CI - GitHub Actions)
 
-    Edite o arquivo index.html ou o Dockerfile.
+Edite o arquivo index.html ou o Dockerfile. Faça o commit e push para a branch main:
+Bash
 
-    Faça o commit e push para a branch main:
-    Bash
+git add .
+git commit -m "Atualiza o servidor web e dispara o pipeline"
+git push origin main
 
-    git add .
-    git commit -m "Atualiza o servidor web e dispara o pipeline"
-    git push origin main
+O GitHub Actions irá construir a imagem e enviá-la ao ECR.
 
-    O GitHub Actions irá construir a imagem e enviá-la ao ECR.
+Entrega Contínua (CD - AWS CodePipeline)
 
-5. Entrega Contínua (CD - AWS CodePipeline)
-
-    A nova imagem no ECR disparará o pipeline ECS-Nginx-CD-Pipeline.
-
-    O CodeDeploy executará o deploy Blue/Green no ECS.
-
-    O DNS do ALB (saída do Terraform) fornecerá o URL final da aplicação.
-
-
-    ----------------------
-    This is a challenge by Coodesh
+A nova imagem no ECR disparará o pipeline ECS-Nginx-CD-Pipeline. O CodeDeploy executará o deploy Blue/Green no ECS. O DNS do ALB (saída do Terraform) fornecerá o URL final da aplicação.
+![Diagrama do Pipeline CI/CD com CodeDeploy](docs/deploy-ecs.drawio.png)
+This is a challenge by Coodesh
