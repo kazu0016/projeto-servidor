@@ -89,4 +89,5 @@ Entrega Contínua (CD - AWS CodePipeline)
 
 A nova imagem no ECR disparará o pipeline ECS-Nginx-CD-Pipeline. O CodeDeploy executará o deploy Blue/Green no ECS. O DNS do ALB (saída do Terraform) fornecerá o URL final da aplicação.
 ![Diagrama do Pipeline CI/CD com CodeDeploy](docs/deploy-ecs.drawio.png)
+---------------------------------
 This is a challenge by Coodesh
